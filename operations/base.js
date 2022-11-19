@@ -1,5 +1,5 @@
 
 
-exports.bind = function() {
-    console.log("slayyyy")
+exports.bind = (g) => {
+    console.log(g)
 }

@@ -16,10 +16,9 @@ function broadcast(m) {
 
 wss.on('connection', (ws) => {
     clients.push(new client(clients.length, ws, 0, [0,0,0]))
-    ws.send("connected");
+    console.log("Client Connected #" + clients.length)
     ws.on('message', (messageAsString) => {
-        if(messageAsString[0] == 0x00) {
-            broadcast(0x01)
-        }
+        console.log(messageAsString)
+        broadcast(messageAsString)
     });
 });

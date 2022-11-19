@@ -1,3 +1,2 @@
-exports.bind = function() {
-    
+exports.bind = () => {
 }
