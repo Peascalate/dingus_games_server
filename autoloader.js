@@ -5,7 +5,7 @@ exports.autoload = function(d) {
     glob.sync( './'+d+'/**/*.js' ).forEach( function( file ) {
         try {
             require( path.resolve( file ) ).bind();
-            info("Bound all packet handlers from " + file)
+            info("Bound packet handlers from " + file)
         }
         catch {
             error("Failed to bind packet handlers from " + file + "!");

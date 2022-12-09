@@ -7,25 +7,36 @@ exports.register_operation = (f, idx) => {
     operations[idx] = f;
 }
 
+// This function is actually gross but the second half is rarely used for repeated packets
 exports.construct_packet = (type, value_arr) => {
-    return Buffer.from(type + value_arr)
+    if(Buffer.isBuffer(value_arr)) {
+        return Buffer.concat([Buffer.from([type]), value_arr])
+    }
+
+    var tmp = [Buffer.from([type])]
+    value_arr.forEach((v) => {
+        tmp.push(Buffer.from(v))
+    })
+
+    return Buffer.concat(tmp)
 }
 
-exports.broadcast = (clients) => {
+exports.broadcast = (clients, packet, exclude_id = -1) => {
     clients.forEach((v) => {
-        v.ws.send(m);
+        if(v.id == exclude_id) {
+            return
+        }
+        v.ws.send(packet);
     });
 }
 
-exports.initialize_parser = () => {
+exports.initialize_handler = () => {
     // Fill up alloted packet space, easier for binding to certain indices
-    for(var i = 0; i < 255; i++) {
-        this.register_operation(() => {}, i);
-    }
-    info("Successfully initialized the packet parser")
+    operations.fill({},0,255)
+    info("Successfully initialized the packet handler")
 }
 
-exports.parse_packet = (packet, ws, clients) => {
+exports.handle_packet = (packet, ws, clients) => {
     if (!Buffer.isBuffer(packet)) {
         // TODO: Add a warning or an error for this
         return;
@@ -39,9 +50,7 @@ exports.parse_packet = (packet, ws, clients) => {
     //     // TODO: Add a warning or an error for this
     //     return;
     // }
-    console.log(req_operation);
-    console.log(operations);
-
-    operations[req_operation](packet.subarray(1), ws, clients);
+    console.log(req_operation)
+    operations[req_operation](packet, ws, clients);
 
 }

@@ -1,25 +1,22 @@
 var colors = require('colors')
-function info(txt) {
+
+// These look aweful right now
+// These will eventually store info on disk, rn it's just pretty console output
+exports.info = (txt) => {
     console.log(("[info]> " + txt).cyan);
 }
 
-function warn(txt) {
+exports.warn = (txt) => {
     console.log(("[warn]> " + txt).yellow);
 }
 
-function error(txt) {
-    console.log(("[error]> " + txt).red);
+exports.error = (txt) => {
+  console.log(("[error]> " + txt).red);
 }
 
-function success(txt) {
+exports.success = (txt) => {
     console.log(("[success]> " + txt).green);
 }
-
-
-exports.info = info;
-exports.warn = warn;
-exports.error = error;
-exports.success = success;
 
 
 exports.make_struct = function(names) {
