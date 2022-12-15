@@ -6,6 +6,6 @@ function throw_dodgeball(packet, ws, clients) {
     return
 }
 
-exports.bind() = () => {
+exports.bind = () => {
     register_operation(throw_dodgeball,0x83);
 }

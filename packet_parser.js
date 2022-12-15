@@ -32,7 +32,7 @@ exports.broadcast = (clients, packet, exclude_id = -1) => {
 
 exports.initialize_handler = () => {
     // Fill up alloted packet space, easier for binding to certain indices
-    operations.fill({},0,255)
+    operations.fill(0,0,255)
     info("Successfully initialized the packet handler")
 }
 
@@ -44,13 +44,11 @@ exports.handle_packet = (packet, ws, clients) => {
 
     var req_operation = packet[0];
 
-    // COMMENTED OUT BECAUSE INVALID STRUCTURE ATMMMMMM
-    // Invald Operation
-    // if(req_operation >= operations.length) {
-    //     // TODO: Add a warning or an error for this
-    //     return;
-    // }
-    console.log(req_operation)
+    if(operations[req_operation] == 0) {
+        // TODO: Add a warning or an error for this
+        return;
+    }
+
     operations[req_operation](packet, ws, clients);
 
 }
