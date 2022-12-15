@@ -8,10 +8,11 @@ initialize_handler()
 
 autoload("operations");
 
+const max_players = 4
 const clients = []
 
 wss.on('connection', (ws) => {
-    clients.push(new client(clients.length, ws, "", 0, [0, 0, 0], [0, 0, 0]))
+    clients.push(new client(clients.length, ws, "", 0, [0, 0, 0], [0, 0, 0], 0, 0))
     ws.send(Buffer.from([0x00,clients.length - 1]))
     ws.on('message', (packet) => {
         handle_packet(packet,ws,clients);
