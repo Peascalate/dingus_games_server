@@ -8,7 +8,6 @@ const resync_info = make_struct("id username pos rot fsid sktid")
 // (SERVER:0x00) - New client packet (establish name)
 // Returns (CLIENT:0x01 - NEW PAWN)
 function new_client(packet, ws, clients) {
-    // Gross but easier in godot then having a length
     var len = packet[4]
     var sktid = packet[3]
     var fsid = packet[2]
@@ -38,7 +37,12 @@ function resync_game(packet,ws,clients) {
     ws.send(pkt)
 }
 
-exports.bind = (g) => {
+function disconnect_clean(packet, ws, clients) {
+    var id = packet[1]
+    clients[id] = null
+}
+
+exports.bind = () => {
     register_operation(new_client,0x00)
     register_operation(resync_game,0x05)
 }
