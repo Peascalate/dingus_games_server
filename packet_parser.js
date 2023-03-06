@@ -31,7 +31,7 @@ exports.broadcast = (clients, packet, exclude_id = -1) => {
 }
 
 exports.initialize_handler = () => {
-    // Fill up alloted packet space, easier for binding to certain indices
+    // Fill up alloted packet space, easier for binding to specific indices rather than just pushing to the back
     operations.fill(0,0,255)
     info("Successfully initialized the packet handler")
 }
