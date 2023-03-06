@@ -7,6 +7,7 @@ const wss = new WebSocket.Server({ port: 7071 });
 initialize_handler()
 
 autoload("operations");
+require("./gamemodes/gm_dodgeball").bind()
 
 const max_players = 4
 const clients = []
